@@ -12,9 +12,7 @@ endif
 
 function!  SPU()
  let undo_filename = escape(undofile(expand('%')),'% ')
- echo "undo_filename:" . undo_filename
  let g:spu_bkp_name = &backupdir .  substitute(expand('%:p'), "/", "%", "g") . "~"
- echo "spu_bkp_name: " . g:spu_bkp_name
  "execute 'write! /tmp/spu'
  execute system("cp " . expand("%:t") . " /tmp/spu")
  execute '%!cat ' . escape(g:spu_bkp_name, "% ")
@@ -29,7 +27,7 @@ function! IS_UNDOFILE_SANE()
   let undo_filename = escape(undofile(expand('%')),'% ')
   redir => listing
   "let v:warningmsg = ""
-  execute 'rundo ' . undo_filename
+  silent execute 'rundo ' . undo_filename
   redir END
   "echo listing
   "if v:warningmsg =~ "File contents" 
@@ -46,10 +44,26 @@ function! Prompt_for_SUP()
   if IS_UNDOFILE_SANE()
     "echo "all okay"
   else
-    echo "fuck"
+    let result = Confirm("Undo is lost, press Y to restore")
+    if result
+      call SPU()
+    endif
   endif
 endfunction
 
+fun! Confirm(msg)
+    echo a:msg . ' '
+    let l:answer = nr2char(getchar())
+
+    if l:answer ==? 'y'
+        return 1
+    elseif l:answer ==? 'n'
+        return 0
+    else
+        echo 'Please enter "y" or "n"'
+        return Confirm(a:msg)
+    endif
+endfun
 au BufRead * call Prompt_for_SUP()
 
 function! WriteBackup()
