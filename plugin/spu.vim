@@ -14,7 +14,7 @@ function!  SPU()
  let undo_filename = escape(undofile(expand('%')),'% ')
  let g:spu_bkp_name = &backupdir .  substitute(expand('%:p'), "/", "%", "g") . "~"
  "execute 'write! /tmp/spu'
- execute system("cp " . expand("%:t") . " /tmp/spu")
+ execute system("cp " . expand("%:p") . " /tmp/spu")
  execute '%!cat ' . escape(g:spu_bkp_name, "% ")
  "TODO check for error here as well
  execute 'rundo ' . undo_filename
