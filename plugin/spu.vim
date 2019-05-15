@@ -4,11 +4,11 @@
 "upon leader d, if "  execute 'rundo ' . undo_filename "  fails
   "read backup file, %!cat backupfile
   "do backup
-let g:spu_dir = $HOME . "/.spu.vim"
+"let g:spu_dir = $HOME . "/.spu.vim"
 
-if !isdirectory(g:spu_dir)
-    call mkdir(g:spu_dir, "p")
-endif
+"if !isdirectory(g:spu_dir)
+    "call mkdir(g:spu_dir, "p")
+"endif
 
 function!  SPU()
  let undo_filename = escape(undofile(expand('%')),'% ')
