@@ -1,4 +1,4 @@
-# spu.vim
+# spu.vim (EXPERIMENAL, you might endup lossing whole file) (it works on my machine)
 Super persistent undo (keeps undotree even after file changed outside vim)
 
 Fixes ([from](https://stackoverflow.com/a/16975959/2577465))
