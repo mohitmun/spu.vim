@@ -15,7 +15,11 @@ function!  SPU()
  let g:spu_bkp_name = &backupdir .  substitute(expand('%:p'), "/", "%", "g") . "~"
  "execute 'write! /tmp/spu'
  execute system("cp " . expand("%:p") . " /tmp/spu")
- execute '%!cat ' . escape(g:spu_bkp_name, "% ")
+ if filereadable(g:spu_bkp_name)
+   execute '%!cat ' . escape(g:spu_bkp_name, "% ")
+  else
+    echo "cannot restore undotree :C no backup exists"
+ endif
  "TODO check for error here as well
  execute 'rundo ' . undo_filename
  execute 'write'
