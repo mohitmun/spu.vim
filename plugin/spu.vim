@@ -16,15 +16,15 @@ function!  SPU()
  "execute 'write! /tmp/spu'
  execute system("cp " . expand("%:p") . " /tmp/spu")
  if filereadable(g:spu_bkp_name)
-   execute '%!cat ' . escape(g:spu_bkp_name, "% ")
+    execute '%!cat ' . escape(g:spu_bkp_name, "% ")
+    "TODO check for error here as well
+    execute 'rundo ' . undo_filename
+    execute 'write'
+    execute '%!cat /tmp/spu'
+    execute 'write'
   else
     echo "cannot restore undotree :C no backup exists"
  endif
- "TODO check for error here as well
- execute 'rundo ' . undo_filename
- execute 'write'
- execute '%!cat /tmp/spu'
- execute 'write'
 endfunction
 
 function! IS_UNDOFILE_SANE()
