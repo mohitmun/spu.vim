@@ -28,6 +28,7 @@ function!  SPU()
 endfunction
 
 function! IS_UNDOFILE_SANE()
+  "#TODO check if undofile readable
   let undo_filename = escape(undofile(expand('%')),'% ')
   redir => listing
   "let v:warningmsg = ""
