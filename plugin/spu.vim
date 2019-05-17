@@ -30,19 +30,22 @@ endfunction
 function! IS_UNDOFILE_SANE()
   "#TODO check if undofile readable
   let undo_filename = escape(undofile(expand('%')),'% ')
-  redir => listing
-  "let v:warningmsg = ""
-  silent execute 'rundo ' . undo_filename
-  redir END
-  "echo listing
-  "if v:warningmsg =~ "File contents" 
-    "return 0
-  "endif
+  if filereadable(undo_filename)
+    redir => listing
+    "let v:warningmsg = ""
+    silent execute 'rundo ' . undo_filename
+    redir END
+    "echo listing
+    "if v:warningmsg =~ "File contents" 
+      "return 0
+    "endif
 
-  if listing =~ "Finished reading undo file"
-    return 1
+    if listing =~ "Finished reading undo file"
+      return 1
+    endif
+    return 0
   endif
-  return 0
+  return 1
 endfunction
 
 function! Prompt_for_SUP()
