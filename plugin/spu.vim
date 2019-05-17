@@ -28,8 +28,8 @@ function!  SPU()
 endfunction
 
 function! IS_UNDOFILE_SANE()
-  let undo_filename = escape(undofile(expand('%')),'% ')
-  if filereadable(undo_filename)
+  if filereadable(undofile(expand('%')))
+    let undo_filename = escape(undofile(expand('%')),'% ')
     redir => listing
     "let v:warningmsg = ""
     silent execute 'rundo ' . undo_filename
